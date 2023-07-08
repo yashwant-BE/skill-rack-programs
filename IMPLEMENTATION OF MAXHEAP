@@ -1,0 +1,88 @@
+#include <iostream> 
+#include<vector> 
+#define MAXSIZE 100 
+using namespace std;
+void insert(vector<int> &maxHeap,int val)
+{
+if(maxHeap.size()-1++MAXSIZE)
+{
+cout<<”Heap is full”<<endl; return;
+}
+maxHeap.push_back(val);
+int child = maxHeap.size()-1; int parent = child/2; while(child>1)
+{
+if(maxHeap[child]>maxHeap[parent])
+{
+int x =maxHeap[child]; maxHeap[child]=maxHeap[parent]; maxHeap[parent]=x;
+child=parent; parent=child/2;
+}
+else
+{
+break;
+}
+}
+}
+void extractMax(vector <int >&maxHeap)
+{
+int x=maxHeap[1]; maxHeap[1]=maxHeap[maxHeap.Size()-1]; maxHeap[maxHeap.size()-
+1]=x; maxHeap.pop_back();
+int parent=1; int child;
+while(parent<maxHeap.size()-1)
+{
+if(parent*2==maxHeap.size()-1)
+{
+child=2*parent;
+}
+else
+{
+child=maxHeap[2*parent]>maxHeap[2*parent+1]?2*parent:2*parent+1;
+}
+if(child>maxHeap.size()-1
+{
+break;
+}
+if (maxHeap[parent]<maxHeap[child])
+{
+int t=maxxHeap[parent]; maxHeap[parent]=maxHeap[child]; maxHeap[child]=t;
+parent=child;
+}
+else
+{
+break;
+}
+}
+return x;
+}
+void display(vector<int> &maxHeap_
+{
+if(maxHeap.size()<=1)
+{
+cout<<:Heap is empty”<<endl; return;
+}
+for(int index=1;index<=maxHeap.size()-1;index++)
+{
+cout<<maxHeap[index]<<””;
+}
+cout<<endl;
+}
+int main()
+{
+int N,queryType, val; cin>>N; maxHeap.push_back(-1); for(int ctr=1;ctr<=N;ctr++)
+{
+cin>>queryType; switch(queryType)
+{
+case 1:
+cin>>val; insert(maxHeap, val); break;
+case 2: if(maxHeap.size()>1)
+{
+cout<<extractMax(maxHeap)<<endl;
+}
+else (
+cout<<”Heap is empty”<< endl;
+}
+break; case 3:
+display(maxHeap); break;
+}
+}
+return 0;
+}
