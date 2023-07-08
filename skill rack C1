@@ -1,0 +1,34 @@
+
+/*
+-----------------------------
+Paste into skillrack shortcut.
+-----------------------------
+Open console in your browser by pressing Ctrl+Shift+J in Chrome Windows.
+Or right click the webpage, select inspect element and then change to console tab.
+Paste the code you want into the quotes given in variable CODE and then paste the entire thing into 
+the console. And then press enter.
+BUGS rn:
+- Long line causes a major code shitbreak, so try to avoid those.
+- Too hectic to copy paste into console everything ( solution: make an extension )
+*/
+
+
+var CODE = `
+Paste your code inside here without removing these quotes
+`;
+
+
+
+(function(){
+    var editor_id = $(".ace_editor.ace_dark")[0].id;
+    var editor = ace.edit(editor_id);
+    editor.$blockScrolling = Infinity;
+    X = CODE.split(" ");
+    editor.setValue("");
+    for(var i=0;i<X.length;i++){
+      editor.insert(X[i]+" ");
+      var row = editor.session.getLength() - 1;
+      var column = editor.session.getLine(row).length;
+      editor.gotoLine(row + 1, column);
+  }
+})(); 
