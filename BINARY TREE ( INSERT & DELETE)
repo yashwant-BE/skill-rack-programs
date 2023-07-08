@@ -1,0 +1,201 @@
+#include<iostream>
+using namespace std;
+template<class T>
+class Node
+{
+public:
+T data;
+Node<T> *left,*right;
+};
+template<class T>
+class bintree
+{
+Node<T> *root;
+public:
+bool search(T ele)
+{
+bool flag=false;
+Search1(root,ele,flag);
+return flag;
+}
+void Search1(Node<T> *rt,T ele,bool &exist)
+{
+if(rt!=NULL)
+{
+if(rt->data==ele)
+{
+exist=true;
+return;
+}
+Search1(rt->left,ele,exist);
+Search1(rt->right,ele,exist);
+}
+}
+void insert(T ele,T parent)
+{
+if(root==NULL)
+{
+Node<T> *temp=new Node<T>;
+temp->data=ele;
+temp->left=temp->right=NULL;
+root=temp;
+return;
+}
+else
+{
+bool h=false;
+Search(root,parent,h);
+if(h)
+{
+ins(root,ele,parent);
+}
+else
+cout<<"\nParent not found";
+}
+}
+void ins(Node<T> *rt,T ele,T parent)
+{
+if(rt!=NULL)
+{
+if(parent!=(rt)->data)
+{
+ins(&(rt)->left,ele,parent);
+ins(&(rt)->right,ele,parent);
+}
+else
+{
+if((rt)->left==NULL||(rt)->right==NULL)
+{
+Node<T> *temp;
+temp->data=ele;
+temp->left=temp->right=NULL;
+if((rt)->left==NULL)
+{
+(rt)->left=temp;
+}
+else
+{
+if((rt)->right==NULL)
+(rt)->right=temp;
+}
+}
+else
+cout<<"\n ****Insertion not possible*****";
+return;
+}
+}
+}
+void deletion(T ele)
+{
+bool h;
+Search(root,ele,h);
+if(h)
+{
+del(root,ele);
+}
+else
+cout<<"\n ****Element not found*****";
+}
+void del(Node<T> *rt,T ele)
+{
+if((rt)!=NULL)
+{
+if((rt)->data!=ele)
+{
+del(&(rt)->left,ele);
+del(&(rt)->right,ele);
+}
+else
+{
+if((rt)->left!=NULL&&(rt)->right!=NULL)
+{
+Node<T> *temp=(rt)->right,*pt=NULL;
+while(temp->left)
+{
+pt=temp;
+temp=temp->left;
+}
+if(pt!=NULL)
+{
+pt->left=temp->right;
+temp->left=(rt)->left;
+temp->right=(rt)->right;
+(rt)=temp;
+}
+else
+{
+(rt)->right->left=(rt)->left;
+(rt)=(rt)->right;
+}
+}
+else
+if((rt)->left==NULL&&(rt)->right!=NULL)
+(rt)=(rt)->right;
+else
+if((rt)->left!=NULL&&(rt)->right==NULL)
+(rt)=(rt)->left;
+else (rt)=NULL;
+}
+}
+}
+void display()
+{
+cout<<"\n The binary tree is:";
+cout<<"\nInorder :";
+inorder(root);
+}
+void inorder(Node<T> *rt)
+{
+if(rt!=NULL)
+{
+inorder(rt->left);
+cout<<" "<<rt->data;
+inorder(rt->right);
+}
+}
+};
+int main()
+{
+bintree<int> b;
+int ch,ele,pt;
+while(1)
+{
+cout<<"\n 1.Insertion 2.Deletion 3.Display 4.Search 5.Exit";
+cout<<"\n Enter ur choice:";
+cin>>ch;
+switch(ch)
+{
+case 1:
+cout<<"\n Enter element value:";
+cin>>ele;
+cout<<"\n Enter Parent element:";
+cin>>pt;
+b.insert(ele,pt);
+break;
+case 2:
+cout<<"\n Enter element value to delete:";
+cin>>ele;
+b.deletion(ele);
+break;
+case 3:
+cout<<endl;
+b.display();
+break;
+case 4:
+cout<<"\n Enter element value to search:";
+cin>>ele;
+if(b.search(ele))
+cout<<"\n Element found";
+else
+cout<<"\n Element not found";
+break;
+case 5:
+return 0;
+default:
+cout<<" \n Invalid choice";
+}
+b.display();
+cout<<endl;
+}
+return 0;
+}
