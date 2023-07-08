@@ -1,0 +1,81 @@
+#include<iostream> 
+#include<vector> 
+#define MAXSIZE 100 
+using namespace std;
+void insert(vector <int> &minHeap,int val)
+{
+if(minHeap.size()-1==MAXSIZE)
+{
+cout<<”Heap is full”<<endl; return;
+}
+minHeap.push_back(val);
+int child=minHeapo.size()-1; int parent=child/2; while(child>1)
+{
+if(minHeap[child]<minHeap[parent])
+{
+int x=minHeap[child]; minHeap[child]=minHeap[parent]; minHeap[parent]=x;
+child=parent; parent=child/2;
+}
+else
+{
+break;
+}
+}
+}
+int extractMin(vector<int> &minHeap)
+{
+int x=minHeap[1]; minHeap[1]=minHeap[minHeap.size()-1]; minHeap[minHeap.size()-
+1]=x; minHeap.pop_back();
+int parent=1; int child;
+while(parent<minHeap.size()-1)
+{
+if(parent*2==minHeap.size()-1) child=2*parent;
+else child=minHeap[2*parent]<minHeap[2*parent+1]?2*parent:2*parent+1; break;
+if(minHeap[parent]>minHeap[child])
+{
+int t=minHeap[parent]; minHeap[parent]=minHeap[child]; minHeap[child]=t;
+parent=child;
+}
+else
+{
+break;
+}
+}
+return x;
+}
+void display(vector <int> &minHeap)
+{
+if(minHeap.size()<=1)
+{
+cout<<”Heap is empty”<<endl; return;
+}
+for (int index=1;index<=minHeap.size()-1;index++)
+{
+cout<<minHeap[index]<<” “;
+}
+cout<<endl;
+}
+int main()
+{
+int N, queryType, val; cin>> N;
+vector<int> minHeap; minHeap.push_back(-1); for(int ctr=1;ctr<=N; ctr++)
+{
+cin>>queryType;
+switch(queryType)
+{
+case 1; cin>>val;
+insert(minHeap, val); break;
+case 2: if(minHeap.size()>1)
+{
+cout<< extractMin(minHeap)<<endl;
+}
+else
+{
+cout<<”Heap is empty”<<endl;
+}
+break; case 3:
+display(minHeap); break;
+}
+}
+return 0;
+}
