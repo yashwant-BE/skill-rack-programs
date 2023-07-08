@@ -1,0 +1,78 @@
+#include<iostream>
+#define MAXSIZE 5
+using namespace std;
+int arr[MAXSIZE],top=-1;
+bool isEmpty()
+{
+return(top<0); 
+}
+int push(int x)
+{
+if(top>=MAXSIZE-1){
+Cout<<”Overflow”<<endl;
+}
+else{
+top++;
+arr[top]=x;
+}
+}
+int pop()
+{
+if(top<0)
+{
+cout<<”Underflow”<<endl;
+return 0;
+}
+else {
+Int x=arr[top--];
+return x;
+}
+}
+Int peek()
+{
+If(top<0){
+cout<<”Underflow”<<endl;
+return 0; }
+else{
+int x=arr[top];
+return x;
+}
+}
+void display()
+{
+if(!isEmpty())
+{
+for(int index=0; index<=top; index++)
+{
+cout<<arr[index]<<” “;
+}
+else
+{
+cout<<”Stack is empty”;
+}
+cout<<endl;
+}
+int main()
+{
+int N,option,value;
+cin>>N;
+for(int ctr=0; ctr<N; ctr++)
+{
+cin>>option;
+switch(option)
+{
+case 1:
+cin>>value;
+push(value);
+break;
+case 0:
+cout<<peek()<<endl;
+break;
+case -1:
+cout<<pop()<<endl;
+break;
+}
+}
+display();
+return 0;
+}
