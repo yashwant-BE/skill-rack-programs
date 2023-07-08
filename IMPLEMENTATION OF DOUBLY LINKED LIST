@@ -1,0 +1,208 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+int data;
+Node *next,*prev;
+Node(int val)
+{
+data=val;
+next=prev=NULL;
+}
+};
+class DoublyLinkedList
+{
+public:
+Node *head,*tail;
+DoublyLinkedList()
+{
+head=NULL;
+tail=NULL;
+}
+bool isEmpty();
+int getSize();
+void insertAtNthposition(int, int);
+void deleteNthNode(int);
+bool search(int);
+void display();
+void printReverse();
+};
+bool DoublyLinkedList::isEmpty() {
+ return head == NULL;
+}
+int DoublyLinkedList::getSize() {
+ int count = 0;
+ Node* curr = head;
+ while (curr != NULL) {
+ count++;
+ curr = curr->next;
+ }
+ return count;
+}
+void DoublyLinkedList::insertAtNthPosition(int n, int val) {
+ int size = getSize();
+ if (n > size || n < 1) {
+ n = size + 1;
+ }
+ Node* newNode = new Node(val);
+ if (head == NULL) {
+ head = tail = newNode;
+ return;
+ }
+ if (n == 1) {
+ head->prev = newNode;
+ newNode->next = head;
+ head = newNode;
+ return;
+ }
+ if (n > size) {
+ tail->next = newNode;
+ newNode->prev = tail;
+ tail = newNode;
+ return;
+ }
+ Node* curr = head;
+ for (int i = 1; i < n - 1; i++) {
+ curr = curr->next;
+ }
+ newNode->prev = curr;
+ newNode->next = curr->next;
+ curr->next->prev = newNode;
+ curr->next = newNode;
+}
+void DoublyLinkedList::deleteNthNode(int n) {
+ if (isEmpty()) {
+ cout << "list is empty\n";
+ return;
+ }
+ int size = getSize();
+ if (n > size || n < 1) {
+ cout << "invalid position\n";
+ return;
+ }
+ if (n == 1) {
+ Node* temp = head;
+ head = head->next;
+ if (head != NULL) {
+ head->prev = NULL;
+ }
+ else {
+ tail = NULL;
+ }
+ delete temp;
+ return;
+ }
+ if (n == size) {
+ Node* temp = tail;
+ tail = tail->prev;
+ if (tail != NULL) {
+ tail->next = NULL;
+ }
+ else {
+ head = NULL;
+ }
+ delete temp;
+ return;
+ }
+ Node* curr = head;
+ for (int i = 1; i < n; i++) {
+ curr = curr->next;
+ }
+ curr->prev->next = curr->next;
+ curr->next->prev = curr->prev;
+ delete curr;
+}
+bool DoublyLinkedList::search(int val) {
+ Node* curr = head;
+ while (curr != NULL) {
+ if (curr->data == val) {
+ return true;
+ }
+ curr = curr->next;
+ }
+ return false;
+}
+void DoublyLinkedList::display()
+{
+if(isEmpty())
+{
+cout<<"list is empty"<<endl;
+return;
+}
+Node *temp = head;
+while(temp!=NULL)
+{
+cout<<temp->data<<" ";
+temp = temp->next;
+}
+cout<<endl;
+}
+void DoublyLinkedList::printReverse()
+{
+if(isEmpty())
+{
+cout<<"list is empty"<<endl;
+return;
+}
+Node *temp = tail;
+while(temp!=NULL)
+{
+cout<<temp->data<<" ";
+temp = temp->prev;
+}
+cout<<endl;
+}
+int main()
+{
+int N,query;
+cin>>N;
+DoublyLinkedList dll=DoublyLinkedList();
+for(int ctr=1;ctr<=N;ctr++)
+{
+cin>>query;
+if(query==1)
+{
+cout<<dll.isEmpty()<<endl;
+}
+else if(query==2)
+{
+cout<<dll.getsize()<<endl;
+}
+else if(query==3)
+{
+int pos,val;
+cin>>pos>>val;
+dll.insertAtNthPosition(pos, val);
+}
+else if(query==4)
+{
+int pos;
+cin>>pos;
+dll.deleteNthNode(pos);
+}
+else if(query==5)
+{
+int val;
+cin>>val;
+cout<<dll.search(val)<<endl;
+}
+else if(query==6)
+{
+dll.display();
+}
+else if(query==7)
+{
+dll.printReverse();
+}
+}
+return 0;
+}
+The query type can be one of the following types
+1-isEmpty
+2-getSize
+3-insertAtNthPosition
+4-deleteNthNode
+5-search
+6-diplay
+7-printReverse
